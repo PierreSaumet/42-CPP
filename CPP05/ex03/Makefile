@@ -1,0 +1,60 @@
+# ************************************************************************** #
+#                                                                            #
+#                                                        :::      ::::::::   #
+#   Makefile                                           :+:      :+:    :+:   #
+#                                                    +:+ +:+         +:+     #
+#   By: psaumet <marvin@42.fr>                     +#+  +:+       +#+        #
+#                                                +#+#+#+#+#+   +#+           #
+#   Created: 2020/08/15 11:05:30 by psaumet           #+#    #+#             #
+#   Updated: 2020/08/15 18:14:06 by psaumet          ###   ########.fr       #
+#                                                                            #
+# ************************************************************************** #
+
+NAME			=			main
+
+################################# SOURCES ####################################
+
+SRCS_DIR		=			./
+
+SRCS			+=			main.cpp			\
+							Bureaucrat.cpp		\
+							Form.cpp			\
+							PresidentialPardonForm.cpp	\
+							RobotomyRequestForm.cpp		\
+							ShrubberyCreationForm.cpp	\
+							Intern.cpp
+
+################################# VARIABLES ##################################
+
+CC				=			clang++
+
+FLAGS			=			-Wall -Werror -Wextra
+
+OBJS_DIR 		=		 	objs/
+
+OBJ				=			$(SRCS:.cpp=.o)
+
+OBJS 			= 			$(addprefix $(OBJS_DIR), $(OBJ))
+
+INCLUDES		=			Bureaucrat.hpp Form.hpp PresidentialPardonForm.hpp RobotomyRequestForm.hpp ShrubberyCreationForm.hpp Intern.hpp
+
+################################# RULES ######################################
+
+$(OBJS_DIR)%.o :	$(SRCS_DIR)%.cpp
+	mkdir -p $(OBJS_DIR)
+	$(CC) $(FLAGS) -c $< -o $@
+
+$(NAME): $(OBJS)
+	clang++ $(FLAGS) -o $(NAME) $(OBJS)
+
+all: $(NAME)
+
+clean:
+		rm -rf objs/
+		rm -rf *_shrubbery
+
+
+fclean: clean
+		rm -rf $(NAME)
+
+re:	fclean all
